@@ -1,70 +1,7 @@
-import './style.css';
-import React from 'react';
-import $ from 'jquery';
+import React, { Component } from 'react';
+import { UserForm, UserTable } from './User';
 
-class App extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      lista : [ ],
-      name : '',
-      email : '',
-      password : '',
-      password_confirmation : '',
-    }
-    this.enviaForm = this.enviaForm.bind(this);
-    this.setName = this.setName.bind(this);
-    this.setEmail = this.setEmail.bind(this);
-    this.setPassword = this.setPassword.bind(this);
-    this.setPasswordConfirmation = this.setPasswordConfirmation.bind(this);
-  }
-
-  enviaForm(evento) {
-    evento.preventDefault();
-    console.log("dados sendo enviados...");
-
-    $.ajax({
-      url: "https://profitmanager.onrender.com/api/v2/auth",
-      
-      contentType: 'application/json',
-      dataType: 'json',
-      accept: 'application/json',
-
-      type: 'post',
-      data: JSON.stringify(
-        {
-          name: this.state.name,
-          email: this.state.email,
-          password: this.state.password,
-          password_confirmation: this.state.password_confirmation
-        }
-      ),
-
-      success: function(resposta) {
-        console.log("Sucesso!");
-        console.log(resposta);
-      },
-      complete: function(resposta){
-        console.log("Complete!!");
-      },
-      error: function(resposta){
-        console.log("Error...");
-      }
-    });
-  }
-
-  setName(evento){
-    this.setState( { name : evento.target.value } );
-  }
-  setEmail(evento){
-    this.setState( { email : evento.target.value } );
-  }
-  setPassword(evento){
-    this.setState( { password : evento.target.value } );
-  }
-  setPasswordConfirmation(evento){
-    this.setState( { password_confirmation : evento.target.value } );
-  }
+class App extends Component {
 
   render () {
     return (
@@ -123,66 +60,11 @@ class App extends React.Component {
               
               <br />
               
-              <div>						
-                <h1 class="h2">Cadastro de Usuários</h1>						
-                <form method="post" onSubmit={this.enviaForm}>
-                  <div class="form-group">
-                    <label for="formGroupExampleInput">Nome</label>
-                    <input type="text" class="form-control" id="name" 
-                     name="name" placeholder="Nome"
-                     value={this.state.name} onChange={this.setName}/>
-                  </div>
-                  <div class="form-group">
-                    <label for="formGroupExampleInput">E-mail</label>
-                    <input type="email" class="form-control" id="email" 
-                     name="email" placeholder="E-mail" 
-                     value={this.state.email} onChange={this.setEmail}/>
-                  </div>
-                  <div class="form-group">
-                    <label for="formGroupExampleInput2">Senha</label>
-                    <input type="password" class="form-control" id="password" 
-                     name="password" placeholder="Senha"
-                     value={this.state.password} onChange={this.setPassword}/>
-                  </div>
-                  <div class="form-group">
-                    <label for="formGroupExampleInput2">Confirmar Senha</label>
-                    <input type="password" class="form-control" id="password_confirmation" 
-                     name="password_confirmation" placeholder="Confirme"
-                     value={this.state.password_confirmation} 
-                     onChange={this.setPasswordConfirmation} />
-                  </div>
-                  <button type="submit" class="btn btn-primary">Inscrever-se</button>
-                </form>						
-              </div>
+              <UserForm />
   
               <br />
               
-              <div class="table-responsive">
-                <h2>Usuários</h2>
-                <table class="table table-striped table-sm">
-                  <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Name</th>
-                      <th>E-mail</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {
-                      this.state.lista.map(function(user){
-                        return(
-                          <tr>
-                            <td>{user.id}</td>
-                            <td>{user.nome}</td>
-                            <td>{user.email}</td>
-                          </tr>
-                        );
-                      })
-                    }							
-                  </tbody>
-                </table>
-              </div>
-              
+              <UserTable />
             </main>
             
           </div>
