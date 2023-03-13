@@ -61,6 +61,8 @@ export class UserForm  extends Component {
           //this.setState({lista: novaLista});
 
           PubSub.publish('atualiza-lista-usuarios', novaLista);
+          alert("Cadastro realizado com sucesso!");
+          this.setState({name:'', email: '', password:'', password_confirmation:''});
 
           this.guardaDados = {};
         }.bind(this), 10);
