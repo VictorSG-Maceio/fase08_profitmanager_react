@@ -5,7 +5,7 @@ import $ from 'jquery';
 import CustomInput from './components/CustomInput';
 import ManageErrors from './ManageErrors';
 
-export class UserForm  extends Component {
+export class UserForm extends Component {
 
   constructor(props) {
     super(props);
@@ -31,7 +31,7 @@ export class UserForm  extends Component {
     console.log("dados sendo enviados...");
 
     $.ajax({
-      url: "https://profitmanager.onrender.com/api/v2/auth",
+      url: "https://fase08profitmanager-production.up.railway.app/api/v2/auth",
       
       contentType: 'application/json',
       dataType: 'json',
@@ -48,6 +48,7 @@ export class UserForm  extends Component {
       ),
 
       success: function(resposta) {
+        this.guardaDados = {};
         console.log("Sucesso!");
         console.log(resposta);
 
@@ -67,14 +68,16 @@ export class UserForm  extends Component {
           this.guardaDados = {};
         }.bind(this), 10);
       },
-      complete: function(resposta){
+
+      complete: function(resposta) {
         console.log("Complete!!");
         console.log(resposta.getAllResponseHeaders());
         this.guardaDados.token = resposta.getResponseHeader('access-token');
         this.guardaDados.client = resposta.getResponseHeader('client');
         this.guardaDados.uid = resposta.getResponseHeader('uid');
       }.bind(this),
-      error: function(resposta){
+      
+      error: function(resposta) {
         if (resposta.status === 422) {
           new ManageErrors().publishErrors(resposta.responseJSON);
         }
@@ -127,12 +130,13 @@ export class UserTable  extends Component {
 
   componentDidMount(){
     PubSub.subscribe('atualiza-lista-usuarios', function(topico, novaLista){
-      this.setState({lista:novaLista});
-    }.bind(this))
+      console.log("novaLista!!!!!!");
+      this.setState({lista : novaLista});
+    }.bind(this));
 
     PubSub.subscribe('erro-validacao', function(topico, erro){
       alert(erro);
-    })
+    });
   }
   render(){
     return(
