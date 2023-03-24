@@ -63,6 +63,7 @@ export function UserForm() {
       complete: function(resposta) {
         console.log("Complete!!");
         console.log(resposta.getAllResponseHeaders());
+        
         var obj = guardaDados;
         obj.token = resposta.getResponseHeader('access-token');
         obj.client = resposta.getResponseHeader('client');
@@ -105,9 +106,9 @@ export function UserForm() {
 export function UserTable() {
   const [lista, setLista] = useState([]);
 
-  useEffect(() => {
+  useEffect( () => {
     PubSub.subscribe('atualiza-lista-usuarios', (topico, novaLista) => {
-      console.log("novaLista!!!!!!");
+      console.log("nova lista!");
       setLista(novaLista);
     });
 
@@ -144,3 +145,16 @@ export function UserTable() {
     </div>
   );
 }
+
+const UserBox = () => {
+  return (
+    <div>
+      <br />
+      <UserForm />
+      <br />
+      <UserTable />
+    </div>
+  );
+}
+
+export default UserBox;

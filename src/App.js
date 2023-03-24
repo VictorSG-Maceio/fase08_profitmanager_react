@@ -1,5 +1,6 @@
-import React, { Component } from 'react';
-import { UserForm, UserTable } from './User';
+import React from 'react';
+import { Link, Outlet } from 'react-router-dom';
+import UserBox from './User';
 
 function App() {
   return (
@@ -33,10 +34,10 @@ function App() {
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link active" href="cad_user.html">
+                  <Link class="nav-link active" to="/user">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-users"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
                     Cadastrar Usuário <span class="sr-only">(current)</span>
-                  </a>
+                  </Link>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="cad_gains.html">
@@ -55,10 +56,7 @@ function App() {
           </nav>
 
           <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4"> 
-            <br />
-            <UserForm />
-            <br />
-            <UserTable />
+            <Outlet />
           </main>
           
         </div>
